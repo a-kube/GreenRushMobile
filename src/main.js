@@ -1,40 +1,46 @@
-import React, { useState, useEffect, useRef } from "react"
-import { BackHandler, Platform,Text } from "react-native"
-import { WebView } from "react-native-webview"
+import React, { useState, useEffect, useRef } from "react";
+import { BackHandler, Platform, Text } from "react-native";
+import { WebView } from "react-native-webview";
 
 const Webview = () => {
-const webView = useRef(null);
-const [canGoBack, setCanGoBack] = useState(false);
+  const webView = useRef(null);
+  const [canGoBack, setCanGoBack] = useState(false);
 
-useEffect(() => {
-  if (Platform.OS === 'android') {
-    BackHandler.addEventListener('hardwareBackPress', HandleBackPressed);
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      BackHandler.addEventListener("hardwareBackPress", HandleBackPressed);
 
-    return () => {
-       BackHandler.removeEventListener('hardwareBackPress', HandleBackPressed);
+      return () => {
+        BackHandler.removeEventListener("hardwareBackPress", HandleBackPressed);
+      };
     }
-  }
-}, []); // INITIALIZE ONLY ONCE
+  }, []); // INITIALIZE ONLY ONCE
 
-const HandleBackPressed = () => {
+  const HandleBackPressed = () => {
     if (webView.current.canGoBack) {
-        webView.current.goBack();
-        return true; // PREVENT DEFAULT BEHAVIOUR (EXITING THE APP)
+      webView.current.goBack();
+      return true; // PREVENT DEFAULT BEHAVIOUR (EXITING THE APP)
     }
     return false;
-}
+  };
 
-return (
-  
+  return (
     <WebView
       ref={webView}
       source={{
-        uri: "https://yangkwa.github.io/GreenRushLite/" //Insert your website url
+        uri: "https://yangkwa.github.io/GreenRushLite/", //Insert your website url
       }}
-      style={{marginTop:30}}
-      onNavigationStateChange={navState => {webView.current.canGoBack = navState.canGoBack}}  This line is important
-  />
- )
-}
+      style={{ marginTop: 30 }}
+      onNavigationStateChange={(navState) => {
+        webView.current.canGoBack = navState.canGoBack;
+      }}
+      This
+      line
+      is
+      important
+    />
+  );
+};
 
 export default Webview;
+
